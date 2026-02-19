@@ -1,22 +1,23 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from app.config import Config
+from app.extensions import db
+from dotenv import load_dotenv
 
-db = SQLAlchemy()
+load_dotenv()
 
 
 def create_app():
-    app = Flask(__name__, template_folder="../templates",
-                static_folder="../static")
-    app.config["SECRET_KEY"] = "mysecretkey123"
 
-    # Database configuration
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///payments.db"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-    # Initialize DB
     db.init_app(app)
-    with app.app_context():
+
+    # 🔥 FORCE DB INIT BEFORE FIRST REQUEST
+    @app.before_first_request
+    def create_tables():
         db.create_all()
+
     from app.routes import main
     app.register_blueprint(main)
 
