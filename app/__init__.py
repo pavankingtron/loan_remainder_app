@@ -5,7 +5,8 @@ db = SQLAlchemy()
 
 
 def create_app():
-    app = Flask(__name__, template_folder="../templates", static_folder="../static")
+    app = Flask(__name__, template_folder="../templates",
+                static_folder="../static")
     app.config["SECRET_KEY"] = "mysecretkey123"
 
     # Database configuration
@@ -14,7 +15,8 @@ def create_app():
 
     # Initialize DB
     db.init_app(app)
-
+    with app.app_context():
+        db.create_all()
     from app.routes import main
     app.register_blueprint(main)
 
