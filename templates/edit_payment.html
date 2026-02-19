@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block title %}Edit Payment{% endblock %} {% block
+content %}
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow p-4">
+      <h4 class="fw-bold mb-3"><i class="fa fa-edit"></i> Edit Payment</h4>
+
+      <form method="POST">
+        <input class="form-control mb-2" value="{{ p.name }}" disabled />
+
+        <input class="form-control mb-2" value="{{ p.email }}" disabled />
+
+        <input class="form-control mb-2" value="₹{{ p.amount }}" disabled />
+
+        <input
+          class="form-control mb-2"
+          name="paid"
+          type="number"
+          placeholder="Paid Amount"
+        />
+
+        <input
+          class="form-control mb-2"
+          name="deadline"
+          type="date"
+          value="{{ p.deadline.strftime('%Y-%m-%d') }}"
+        />
+
+        <div class="d-flex gap-2 mt-3">
+          <button class="btn btn-success flex-fill">
+            <i class="fa fa-save"></i> Update
+          </button>
+
+          <a href="/" class="btn btn-outline-secondary flex-fill">
+            <i class="fa fa-arrow-left"></i> Back
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
