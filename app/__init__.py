@@ -14,7 +14,9 @@ def create_app():
     db.init_app(app)
     mail.init_app(app)
 
-    # 🔥 FORCE DB CREATION IMMEDIATELY
+    # 🔥 IMPORT MODELS BEFORE CREATING TABLES
+    from app import models
+
     with app.app_context():
         db.create_all()
 
