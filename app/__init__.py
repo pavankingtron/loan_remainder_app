@@ -8,7 +8,16 @@ load_dotenv()
 
 def create_app():
 
-    app = Flask(__name__)
+    import os
+
+    BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(BASE_DIR, "templates"),
+        static_folder=os.path.join(BASE_DIR, "static")
+    )
+
     app.config.from_object(Config)
 
     db.init_app(app)
